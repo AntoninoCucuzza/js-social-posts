@@ -107,18 +107,32 @@ const posts = [
 
 posts.forEach(key => {
     containerEl.insertAdjacentHTML('beforeend', postMarkup(key.author.image, key.author.name, key.created, key.content, key.media, key.likes,))
-    
+
 });
+
+const likeButtons = document.querySelectorAll('.like-button')
+const likeNumber = document.querySelectorAll('.js-likes-counter')
+let attivo = false;
     
 
+likeButtons.forEach((element,i) => {
+    element.addEventListener('click', function like(e) {
+    e.preventDefault();
+    
+    //console.log(likeNumber[i].textContent);
 
-
-
-
-
-
-
-
+    if (attivo) {
+        attivo = false;
+        likeNumber[i].innerHTML = Number(likeNumber[i].innerHTML) -1;
+        likeButtons[i].classList.remove('like-button_active')
+    } else {
+        attivo = true
+        likeNumber[i].innerHTML = Number(likeNumber[i].innerHTML) + 1;
+        likeButtons[i].classList.add('like-button_active')  
+    }
+    
+})
+})
 
 
 
@@ -129,7 +143,7 @@ function postMarkup(avatarImg, Name, data, content,  postImg, likes){
     <div class="post__header">
         <div class="post-meta">                    
             <div class="post-meta__icon">
-                <img class="profile-pic" src="${(avatarImg === null ? './assets/img/avatar.jpg' : avatarImg)}" alt="Phil Mangione">                    
+                <img class="profile-pic" src="${(avatarImg === null ? './assets/img/avatar.jpg' : avatarImg)}" alt="${Name}">                    
             </div>
             <div class="post-meta__data">
                 <div class="post-meta__author">${Name}</div>
